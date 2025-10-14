@@ -2,14 +2,13 @@ import { Pressable, StyleSheet, Text } from "react-native";
 
 export const FokusButton = () => {
     return (
-        <Pressable style={styles.button}>
+        <Pressable style={ styles.button}>
           <Text style={styles.buttonText}>Começar</Text>
         </Pressable>
-    );
-    
+    )
 }
 
-const styles = StyleSheet.create = ({
+const styles = StyleSheet.create({
 button: {
     backgroundColor: "#B872FF",
     borderRadius: 32,
@@ -20,4 +19,4 @@ button: {
     color: "#0211123",
     fontSize: 18,
   },
-});
+})
