@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { ActionButton } from '../components/ActionButton';
 import { FokusButton } from '../components/FokusButton';
+import { Timer } from '../components/Timer';
 
 const pomodoro = [
   {
@@ -42,12 +43,7 @@ export default function Index() {
             />
           ))}
         </View>
-        <Text style={styles.timer}>
-          {new Date(timerType.initialValue * 1000).toLocaleTimeString("pt-BR", {
-            minute: "2-digit",
-            second: "2-digit",
-          })}
-        </Text>
+        <Timer totalSeconds={timerType.initialValue} />
        <FokusButton />
       </View>
       <View style={styles.footer}>
