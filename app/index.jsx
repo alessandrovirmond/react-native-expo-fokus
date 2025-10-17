@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { ActionButton } from '../components/ActionButton';
-import { FokusButton } from '../components/FokusButton';
-import { Timer } from '../components/Timer';
+import { ActionButton } from "../components/ActionButton";
+import { FokusButton } from "../components/FokusButton";
+import { Timer } from "../components/Timer";
 
 const pomodoro = [
   {
@@ -28,6 +28,19 @@ const pomodoro = [
 export default function Index() {
   const [timerType, setTimerType] = useState(pomodoro[0]);
 
+  const timerRef = useRef(null);
+
+  const toogleTimer = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      return;
+    }
+    const id = setInterval(() => {
+      console.log("timer rolando");
+    }, 1000);
+    timerRef.current = id;
+  };
+
   return (
     <View style={styles.container}>
       <Image source={timerType.image} />
@@ -35,22 +48,22 @@ export default function Index() {
       <View style={styles.actions}>
         <View style={styles.context}>
           {pomodoro.map((p) => (
-            <ActionButton 
+            <ActionButton
               key={p.id}
-              active = {timerType.id === p.id}
-              onPress= {() => setTimerType(p)}
+              active={timerType.id === p.id}
+              onPress={() => setTimerType(p)}
               display={p.display}
             />
           ))}
         </View>
         <Timer totalSeconds={timerType.initialValue} />
-       <FokusButton />
+        <FokusButton onPress={toogleTimer} />
       </View>
       <View style={styles.footer}>
         <Text style={styles.footerText}>Projeto sem fins comerciais</Text>
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -92,4 +105,4 @@ const styles = StyleSheet.create({
     color: "#98A0AB",
     fontSize: 12.5,
   },
-})
+});
