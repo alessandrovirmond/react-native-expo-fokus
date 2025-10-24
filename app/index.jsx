@@ -30,11 +30,28 @@ export default function Index() {
 
   const timerRef = useRef(null);
 
+  const [timerRunner, setTimerRunner] = useState(false);
+
+  const clear = () => {
+    if (timerRef.current != null) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+      setTimerRunner(false);
+    }
+  };
+
+  const toogleTimerType = (newTimerType) => {
+    setTimerType(newTimerType);
+    clear();
+  };
+
   const toogleTimer = () => {
     if (timerRef.current) {
-      clearInterval(timerRef.current);
+      clear();
       return;
     }
+
+    setTimerRunner(true);
     const id = setInterval(() => {
       console.log("timer rolando");
     }, 1000);
@@ -51,13 +68,16 @@ export default function Index() {
             <ActionButton
               key={p.id}
               active={timerType.id === p.id}
-              onPress={() => setTimerType(p)}
+              onPress={() => toogleTimerType(p)}
               display={p.display}
             />
           ))}
         </View>
         <Timer totalSeconds={timerType.initialValue} />
-        <FokusButton onPress={toogleTimer} />
+        <FokusButton
+          onPress={toogleTimer}
+          title={timerRef.current ? "Pausar" : "Começar"}
+        />
       </View>
       <View style={styles.footer}>
         <Text style={styles.footerText}>Projeto sem fins comerciais</Text>
